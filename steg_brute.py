@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 from subprocess import Popen, PIPE, DEVNULL
-from progress.bar import  Bar
+from progress.bar import Bar
 from argparse import ArgumentParser
 import os
 import sys
@@ -79,7 +79,8 @@ def steg_brute(ifile, dicc):
 
 
 def steghide(ifile, passwd):
-    results = extract_secret(ifile, passwd)
+    ofile = ifile.split('.')[0] + "_flag.txt"
+    results = extract_secret(ifile, passwd, ofile)
     if not results[0]:
         print(Color.FAIL + "\n\n " + results[1] + Color.ENDC)
 
