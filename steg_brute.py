@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 from subprocess import Popen, PIPE, DEVNULL
-from progressbar import ProgressBar, Percentage, Bar
+from progress.bar import  Bar
 from argparse import ArgumentParser
 import os
 import sys
@@ -60,45 +60,45 @@ def count_lines(fname):
 
 
 def steg_brute(ifile, dicc):
-    i = 0
-    ofile = ifile.split('.')[0] + "_flag.txt"
     nlines = count_lines(dicc)
+    ofile = ifile.split('.')[0] + "_flag.txt"
+    bar = Bar('Searching', max=nlines)
+    print('\n')
     with open(dicc, 'r') as passFile:
-        pbar = ProgressBar(widgets=[Percentage(), Bar()], maxval=nlines).start()
-        print('\n')
         for pass_line in passFile:
             password = pass_line.strip('\n')
-            r = Popen(['steghide', 'extract', '-sf', ifile, '-p', password, '-xf', ofile], stdout=PIPE, stderr=PIPE)
-            output = r.communicate()[1].decode('utf-8')
-            sys.stdout.flush()
-            sys.stdout.write('\r')
-            sys.stdout.write("Trying: {}".format(password))
-            if "no pude extraer" not in output and "could not extract" not in output:
-                print(Color.GREEN + "\n " + output + Color.ENDC)
-                print("\n\n [+] " + Color.INFO +
-                      "Information obtained with password:" + Color.GREEN + " {}\n".format(password + Color.ENDC))
-                if check_file(ofile):
-                    with open(ofile, 'r') as outfile:
-                        for line in outfile.readlines():
-                            print(line)
-                break
-            pbar.update(i + 1)
-            i += 1
+            results = extract_secret(ifile, password, ofile)
+            if not results:
+                bar.next()
+            else:
+                bar.finish()
+                print_results(results, password, ofile)
+                return
+        bar.finish()
+        print("Password not in list...")
 
 
 def steghide(ifile, passwd):
-    ofile = ifile.split('.')[0] + "_flag.txt"
+    results = extract_secret(ifile, passwd)
+    if not results[0]:
+        print(Color.FAIL + "\n\n " + results[1] + Color.ENDC)
+
+
+def extract_secret(ifile, passwd, ofile):
     r = Popen(['steghide', 'extract', '-sf', ifile, '-p', passwd, '-xf', ofile], stdout=PIPE, stderr=PIPE)
     output = r.communicate()[1].decode('utf-8')
     if "no pude extraer" not in output and "could not extract" not in output:
-        print(Color.GREEN + "\n\n " + output + Color.ENDC)
-        print("\n [+] " + Color.INFO + "Information obtained: \n" + Color.ENDC)
-        if check_file(ofile):
-            with open(ofile, 'r') as myfile:
-                for line in myfile.readlines():
-                    print(line)
-    else:
-        print(Color.FAIL + "\n\n " + output + Color.ENDC)
+        return output
+
+
+def print_results(results, passwd, ofile):
+    print(Color.GREEN + "\n " + results + Color.ENDC)
+    print("\n\n [+] " + Color.INFO +
+          "Information obtained with password:" + Color.GREEN + " {}\n".format(passwd + Color.ENDC))
+    if check_file(ofile):
+        with open(ofile, 'r') as outfile:
+            for line in outfile.readlines():
+                print(line)
 
 
 def arguments():
