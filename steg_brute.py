@@ -137,10 +137,10 @@ def main():
         steghide(args.file, args.password)
 
     elif args.brute and not args.info and not args.extract:
-        print("\n [i] " + Color.INFO + "Searching..." + Color.ENDC)
         if not check_file(args.dicc):
             print("No dictionary file found at {}".format(args.dicc))
         else:
+            print("\n [i] " + Color.INFO + "Searching..." + Color.ENDC)
             steg_brute(args.file, args.dicc)
 
     else:
@@ -148,4 +148,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('\n\nStopping...')
+        sys.exit(0)
