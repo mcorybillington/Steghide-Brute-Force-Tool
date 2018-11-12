@@ -56,7 +56,7 @@ def count_lines(fname):
     with open(fname, 'rb') as f:
         for i, l in enumerate(f):
             pass
-    return i
+    return i + 1
 
 
 def steg_brute(ifile, dicc):
