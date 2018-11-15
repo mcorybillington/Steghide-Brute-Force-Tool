@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 from subprocess import Popen, PIPE, DEVNULL
-from progress.bar import Bar
 from argparse import ArgumentParser
 import os
 import sys
@@ -34,6 +33,24 @@ Command line examples:
     ./steg_brute.py -b -d <dictionary> -f <file>
 
     """
+
+
+def progress_bar():
+    try:
+        from progress.bar import Bar
+    except ImportError:
+        yes = {'yes', 'y', 'ye', ''}
+        no = {'no', 'n'}
+        choice = input("You're missing the 'progress' python module. Install it? y/n: ").lower()
+        while True:
+            if choice in yes:
+                from pip._internal import main as pipmain
+                pipmain(['install', '-r', 'requirements.pip'])
+                break
+            elif choice in no:
+                sys.exit(0)
+            else:
+                choice = input("Please respond with 'yes' or 'no'")
 
 
 def check_file(file):
@@ -127,7 +144,7 @@ def arguments():
 
 
 def main():
-
+    progress_bar()
     check_steghide()
     args = arguments()
 
