@@ -35,7 +35,7 @@ Command line examples:
     """
 
 
-def progress_bar():
+def import_progress_bar():
     try:
         from progress.bar import Bar
     except ImportError:
@@ -144,7 +144,7 @@ def arguments():
 
 
 def main():
-    progress_bar()
+    import_progress_bar()
     check_steghide()
     args = arguments()
 
