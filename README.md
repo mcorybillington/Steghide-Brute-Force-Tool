@@ -1,70 +1,42 @@
+# Steghide Brute Force Tool
+
 A fork of https://github.com/Va5c0/Steghide-Brute-Force-Tool
-
-# Steghide Brute Force Tool
-
-
-
-To launch the script by typing:<br/>
-<code>python steg_brute.py [option] [-f file]</code>
-
-For more instructions type<br/>
-<code>python steg_brute.py -h</code>
-
-# Version
-Steg Brute Force Tool V1.0
-
-# Steghide Brute Force Tool
 
 Executes a dictionary attack against a file that has information hidden in it and is password protected.
 
 ## Getting Started
-```<code>git clone https://github.com/mcorybillington/Steghide-Brute-Force-Tool.git</code>
+
+Clone this repository
+```
+git clone https://github.com/mcorybillington/Steghide-Brute-Force-Tool.git
 ```
 
 ### Prerequisites
 
-You'll need to have steghide installed.
-Install the following packages
+Install the following python packages 
 ```
 pip install progress
 ```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Or simply run 
 
 ```
-Give the example
+python steg_brute.py
 ```
+And it will prompt you to install the necessary package
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-
+You will also need to have steghide installed. Use your system's package manager to install it.
 
 ## Version
 Steg Brute Force Tool V1.0
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Va5c0** -           *Initial work* - [Va5c0](https://github.com/Va5c0) 
+* **Cory Billington**   *This fork* - [mcorybillington](https://github.com/mcorybillington/)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
 
